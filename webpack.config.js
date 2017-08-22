@@ -1,9 +1,14 @@
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+
 module.exports = {
   entry: [
     "./app/index.js"
   ],
   output: {
-    filename: "./public/js/bundle.js"
+    path: path.join(__dirname, "/public"),
+    filename: "/js/bundle.js",
+    chunkFilename: "/js/[chunkhash].chunk.js"
   },
   module: {
     loaders: [
@@ -13,5 +18,8 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new CleanWebpackPlugin(['public'])
+  ]
 }

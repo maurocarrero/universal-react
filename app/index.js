@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory as history } from 'react-router';
+import { Router, browserHistory as history, match } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
@@ -12,8 +12,10 @@ const PRELOADED_STATE = (window && window.PRELOADED_STATE) || {};
 
 export const store = createStore(reducers, PRELOADED_STATE);
 
-ReactDOM.render((
-  <Provider store={store}>
-    <Router routes={routes} history={history}/>
-  </Provider>
-), ROOT);
+match({ routes, history }, (error, redirectLocation, renderProps) => {
+  ReactDOM.render((
+    <Provider store={store}>
+      <Router {...renderProps} />
+    </Provider>
+  ), ROOT);
+});
